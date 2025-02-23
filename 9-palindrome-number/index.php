@@ -7,27 +7,31 @@ class Solution {
     * @return Boolean
     */
     function isPalindrome($x) {
-        if($x < 0)
+        if($x < 0 || $x % 10 == 0 && $x != 0)
             return false;
 
-        $length = strlen($x) - 1;
+        $invertedHalf = 0;
 
-        $palindrome = false;
-
-        for($i = 0; $i <= $length; $i){
-            for($j = $length; $j >= 0; $j){
-                if($x[$i] == $x[$j]){
-                    $palindrome = true;
-                }
-            }
+        while ($x > $invertedHalf){
+            $invertedHalf = ($invertedHalf * 10) + ($x % 10);
+            $x = (int)($x/10);
         }
 
-        return $palindrome;
+        if(($x == $invertedHalf) || $x == (int)($invertedHalf / 10))
+            return true;
+
+        return false;
     }
 }
 
 $solution = new Solution();
 
-return $solution->isPalindrome(121);
+echo $solution->isPalindrome(20);
 
-//Usar %10 permite pegar o ultimo digito de um inteiro
+// Usar %10 permite pegar o ultimo digito de um inteiro
+// Solucao
+// Verifica numeros negativos, pois se for negativo nao eh palindromo
+// Verifica se multiplo de 10 e diferente de 0, pois nao eh palindromo(30, 40, 50)
+// Incrementa invertedHalf com a metade
+// Decrementa x ate a metade final do valor
+// Enquanto x for maior que o invertedHalf, continua decrementando e incrementando ate que as duas metades se tornem iguais
