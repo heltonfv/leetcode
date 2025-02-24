@@ -7,21 +7,26 @@ class Solution {
      * @return Integer
      */
     function maxProfit($prices) {
-        $max = 0;
+        $minPrice = PHP_INT_MAX;
+        $maxProfit = 0;
 
-        for($i = 0; $i < count($prices) - 1; $i++){
-            for($j = 0; $j < count($prices) -1; $j++){
-                $tmp = $prices[$i] - $prices[$j];
-                if($tmp > $max){
-                    $max = $tmp;
-                }
-            }
+        foreach($prices as $price){
+            if($price < $minPrice)
+                $minPrice = $price;
+            
+            $profit = $price - $minPrice;
+
+            if($profit > $maxProfit)
+                $maxProfit = $profit;
         }
 
-        return $max - 1;
+        return $maxProfit;
     }
 }
 
 $solution = new Solution();
 
 echo $solution->maxProfit([7,1,5,3,6,4]);
+
+// Solucao
+// A ideia é percorrer o array uma única vez e manter o menor preço já encontrado enquanto calculamos o maior lucro possível a partir dele.
